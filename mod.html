@@ -1,0 +1,85 @@
+<html>
+
+    <head>
+        <title>수정</title>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+        <script>
+
+            const init = () =>{
+
+              
+                axios.get('http:localhost:3000/language_all')
+                .then(result=>{
+
+                    const del = document.getElementById('del')
+                    const select = document.createElement('select')
+                    select.id = 'mod_select'
+                    select.addEventListener('change',(event)=>{
+                        const selectedItem = e.target.value//
+                        axios.get('http:localhost:3000/language/'+selectedItem)
+                        .then(result=>{
+
+                            const text = document.getElementById
+                        })
+
+                        
+                        console.log(e)
+                    })
+
+                    const option = document.createElement('option')
+                    option.innerHTML = '言語を選択してください。'
+                    option.hidden = true
+                    select.appendChild(option)
+
+                    result.data.map(c=>{
+                        const option = document.createElement('option')
+                        option.innerHTML = c.language
+                        select.appendChild(option) 
+                    })
+
+                    del.appendChild(select)
+                  
+                })
+            }
+
+            const handleMod = () =>{
+                const lan = document.getElementById('mod_select').value
+                const lan_mod = document.getElementsByName('text')[0].value
+                const msg = document.getElementByName('text')[1].value
+
+                console.log(lan,msg)
+
+                axios.post('http:localhost:3000/mod/',{lan:lan, lan_mod:lan_mod, msg:msg})
+                .then(result=>{
+                    console.log(result.data)
+                    if(result.data==='OK'){
+               //         document.getElementById('mod_msg').innerHTML = '수정しました。'
+
+               location.href= 'app.html'
+                    }
+                })
+
+                HashChangeEventjj
+            }
+
+        </script>
+
+    </head>
+
+    <body onload="init();">
+
+        <div id="del">
+            <div id="mod_msg"></div>
+
+            언어 :   <input type="text" name="text">
+            메세지 :   <input type="text" name="text">
+ 
+
+            <input type="button" value="수정" onclick="handleMod();">
+            <input type="button" value="Homeへ" onclick="location.href='app.html'">
+        </div>
+
+    </body>
+
+</html>
